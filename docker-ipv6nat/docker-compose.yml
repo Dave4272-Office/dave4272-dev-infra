@@ -1,0 +1,15 @@
+name: docker-ipv6nat
+services:
+  ipv6nat:
+    image: robbertkl/ipv6nat:0.4.4
+    cap_add:
+      - NET_RAW
+      - NET_ADMIN
+    cap_drop:
+      - ALL
+    container_name: ipv6nat
+    network_mode: "host"
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    
