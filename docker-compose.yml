@@ -89,6 +89,7 @@ services:
       - 11081:11081
       - 11082:11082
       - 11083:11083
+      - 11084:11084
     restart: always
     sysctls:
       net.ipv6.conf.all.disable_ipv6: 0
@@ -99,6 +100,7 @@ services:
       - /media/dave/VM:/var/www/VM:ro
       - /media/dave/Multimedia:/var/www/Multimedia:ro
       - /media/dave/Workspace:/var/www/Workspace:ro
+      - /home/dave/Downloads:/var/www/Downloads:ro
 
   pgadmin4:
     container_name: pgadmin4
