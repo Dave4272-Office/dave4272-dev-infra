@@ -6,43 +6,42 @@ services:
     networks:
       - dockermainnet
     ports:
-      - 9080:9080
-      - 9081:9081
-      - 9082:9082
-      - 9083:9083
+      - '9080:9080'
+      - '9081:9081'
+      - '9082:9082'
+      - '9083:9083'
     restart: always
     sysctls:
       net.ipv6.conf.all.disable_ipv6: 0
       net.ipv6.conf.default.disable_ipv6: 0
     volumes:
-      - ./apache-server/data:/var/www/html:ro
-      - ./apache-server/config/000-default.conf:/etc/apache2/sites-available/000-default.conf:ro
-      - /media/dave/VM:/var/www/VM:ro
-      - /media/dave/Multimedia:/var/www/Multimedia:ro
-      - /media/dave/Workspace:/var/www/Workspace:ro
-
+      - './apache-server/data:/var/www/html:ro'
+      - './apache-server/config/000-default.conf:/etc/apache2/sites-available/000-default.conf:ro'
+      - '/media/dave/VM:/var/www/VM:ro'
+      - '/media/dave/Multimedia:/var/www/Multimedia:ro'
+      - '/media/dave/Workspace:/var/www/Workspace:ro'
+    environment: []
   mongo-express:
     container_name: mongo-express
     depends_on:
       - mongodb
     environment:
-      ME_CONFIG_BASICAUTH_PASSWORD: '${ME_CONFIG_BASICAUTH_PASSWORD}'
-      ME_CONFIG_BASICAUTH_USERNAME: '${ME_CONFIG_BASICAUTH_USERNAME}'
-      ME_CONFIG_MONGODB_ADMINPASSWORD: '${ME_CONFIG_MONGODB_ADMINPASSWORD}'
       ME_CONFIG_MONGODB_ADMINUSERNAME: '${ME_CONFIG_MONGODB_ADMINUSERNAME}'
-      ME_CONFIG_MONGODB_ENABLE_ADMIN: '${ME_CONFIG_MONGODB_ENABLE_ADMIN}'
+      ME_CONFIG_MONGODB_ADMINPASSWORD: '${ME_CONFIG_MONGODB_ADMINPASSWORD}'
       ME_CONFIG_MONGODB_URL: '${ME_CONFIG_MONGODB_URL}'
+      ME_CONFIG_BASICAUTH_USERNAME: '${ME_CONFIG_BASICAUTH_USERNAME}'
+      ME_CONFIG_BASICAUTH_PASSWORD: '${ME_CONFIG_BASICAUTH_PASSWORD}'
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: '${ME_CONFIG_MONGODB_ENABLE_ADMIN}'
       ME_CONFIG_OPTIONS_EDITORTHEME: '${ME_CONFIG_OPTIONS_EDITORTHEME}'
-    image: mongo-express:latest
+    image: 'mongo-express:latest'
     networks:
       - dockermainnet
     ports:
-      - 8081:8081
+      - '8081:8081'
     restart: unless-stopped
     sysctls:
       net.ipv6.conf.all.disable_ipv6: 0
       net.ipv6.conf.default.disable_ipv6: 0
-
   mongodb:
     container_name: mongodb
     environment:
@@ -55,53 +54,50 @@ services:
     networks:
       - dockermainnet
     ports:
-      - 27017:27017
+      - '27017:27017'
     restart: unless-stopped
     sysctls:
       net.ipv6.conf.all.disable_ipv6: 0
       net.ipv6.conf.default.disable_ipv6: 0
     volumes:
-      - /home/dave/database/mongodb/data:/data/db
-      - /home/dave/database/mongodb/config:/data/configdb
-
+      - '/home/dave/database/mongodb/data:/data/db'
+      - '/home/dave/database/mongodb/config:/data/configdb'
   nginx-reverse-proxy:
     container_name: nginx-reverse-proxy
     image: 'nginx:${NGINX_VERSION}'
     networks:
       - dockermainnet
     ports:
-      - 80:80
+      - '80:80'
     restart: always
     sysctls:
       net.ipv6.conf.all.disable_ipv6: 0
       net.ipv6.conf.default.disable_ipv6: 0
     volumes:
-      - ./nginx-reverse-proxy/data:/usr/share/nginx/html:ro
-      - ./nginx-reverse-proxy/config/nginx.conf:/etc/nginx/nginx.conf:ro
-
+      - './nginx-reverse-proxy/data:/usr/share/nginx/html:ro'
+      - './nginx-reverse-proxy/config/nginx.conf:/etc/nginx/nginx.conf:ro'
   nginx-server:
     container_name: nginx-server
     image: 'nginx:${NGINX_VERSION}'
     networks:
       - dockermainnet
     ports:
-      - 11080:11080
-      - 11081:11081
-      - 11082:11082
-      - 11083:11083
-      - 11084:11084
+      - '11080:11080'
+      - '11081:11081'
+      - '11082:11082'
+      - '11083:11083'
+      - '11084:11084'
     restart: always
     sysctls:
       net.ipv6.conf.all.disable_ipv6: 0
       net.ipv6.conf.default.disable_ipv6: 0
     volumes:
-      - ./nginx-server/data:/usr/share/nginx/html:ro
-      - ./nginx-server/config/nginx.conf:/etc/nginx/nginx.conf:ro
-      - /media/dave/VM:/var/www/VM:ro
-      - /media/dave/Multimedia:/var/www/Multimedia:ro
-      - /media/dave/Workspace:/var/www/Workspace:ro
-      - /home/dave/Downloads:/var/www/Downloads:ro
-
+      - './nginx-server/data:/usr/share/nginx/html:ro'
+      - './nginx-server/config/nginx.conf:/etc/nginx/nginx.conf:ro'
+      - '/media/dave/VM:/var/www/VM:ro'
+      - '/media/dave/Multimedia:/var/www/Multimedia:ro'
+      - '/media/dave/Workspace:/var/www/Workspace:ro'
+      - '/home/dave/Downloads:/var/www/Downloads:ro'
   pgadmin4:
     container_name: pgadmin4
     depends_on:
@@ -110,15 +106,14 @@ services:
       PGADMIN_CONFIG_SERVER_MODE: '${PGADMIN_CONFIG_SERVER_MODE}'
       PGADMIN_DEFAULT_EMAIL: '${PGADMIN_DEFAULT_EMAIL}'
       PGADMIN_DEFAULT_PASSWORD: '${PGADMIN_DEFAULT_PASSWORD}'
-    image: dpage/pgadmin4:latest
+    image: 'dpage/pgadmin4:latest'
     networks:
       - dockermainnet
     ports:
-      - 8082:80
+      - '8082:80'
     restart: unless-stopped
     volumes:
-      - /home/dave/database/pgadmin4/:/var/lib/pgadmin
-
+      - '/home/dave/database/pgadmin4/:/var/lib/pgadmin'
   postgresql:
     container_name: postgresql
     environment:
@@ -129,22 +124,21 @@ services:
     networks:
       - dockermainnet
     ports:
-      - 5432:5432
+      - '5432:5432'
     restart: unless-stopped
     sysctls:
       net.ipv6.conf.all.disable_ipv6: 0
       net.ipv6.conf.default.disable_ipv6: 0
     volumes:
-      - /home/dave/database/postgresql-data:/data/postgres
-      - /media/dave/Workspace/postgresbackup:/postgresbackup
-
+      - '/home/dave/database/postgresql-data:/data/postgres'
+      - '/media/dave/Workspace/postgresbackup:/postgresbackup'
 networks:
   dockermainnet:
     name: local-infra-main-net
     driver: bridge
     ipam:
       config:
-        - subnet: fd00:0:0:0:1::/80
-          gateway: fd00:0:0:0:1::1
+        - subnet: 'fd00:0:0:0:1::/80'
+          gateway: 'fd00:0:0:0:1::1'
     attachable: true
     enable_ipv6: true
