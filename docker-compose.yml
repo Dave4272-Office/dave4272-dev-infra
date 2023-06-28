@@ -10,7 +10,7 @@ services:
       - '9081:9081'
       - '9082:9082'
       - '9083:9083'
-    restart: always
+    restart: unless-stopped
     sysctls:
       net.ipv6.conf.all.disable_ipv6: 0
       net.ipv6.conf.default.disable_ipv6: 0
@@ -69,7 +69,7 @@ services:
       - dockermainnet
     ports:
       - '80:80'
-    restart: always
+    restart: unless-stopped
     sysctls:
       net.ipv6.conf.all.disable_ipv6: 0
       net.ipv6.conf.default.disable_ipv6: 0
@@ -87,7 +87,7 @@ services:
       - '11082:11082'
       - '11083:11083'
       - '11084:11084'
-    restart: always
+    restart: unless-stopped
     sysctls:
       net.ipv6.conf.all.disable_ipv6: 0
       net.ipv6.conf.default.disable_ipv6: 0
